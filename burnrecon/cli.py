@@ -4,6 +4,7 @@ from base import (
     list_subdomains,
     list_urls_from_target,
     subdomain_enum,
+    save_subdomains,
     naabu_scan,
 )
 
@@ -33,9 +34,18 @@ def alive_hosts(
     target: str = typer.Option(..., "--target", "-t", help="Name of target")
 ):
     """Check if subdomain is alive."""
-    naabu_scan(target)
+    # naabu_scan(target)
     getalive(target)
 
+
+@app.command()
+def alive_hosts(
+    target: str = typer.Option(..., "--target", "-t", help="Name of target")
+):
+    """Check if subdomain is alive."""
+    # naabu_scan(target)
+    getalive(target)
+    
 
 @app.command()
 def list_urls(
@@ -47,7 +57,15 @@ def list_urls(
 
     for url in urls:
         print(url["url"])
-
+        
+@app.command()
+def import_subdomains(
+    target: str = typer.Option(..., "--target", "-t", help="Name of target"),
+    domain: str = typer.Option(..., "--domain", "-d", help="Domain of target"),
+    fileName: str = typer.Option(..., "--file", "-f", help="Arquivos com os subdomínios a serem importados"),
+):
+    """Import a target's subdomains from a file."""
+    save_subdomains(target, domain, fileName)
 
 if __name__ == "__main__":
     app()

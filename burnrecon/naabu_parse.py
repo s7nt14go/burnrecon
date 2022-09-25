@@ -39,11 +39,12 @@ def naabu_parser(target):
         for line in f:
             data = {
                 "target": target,
-                "host": line,
+                "host": line.rstrip("\n"),
                 "date": datetime.now(),
             }
+            print(data)
             if collection.find_one({"host": line}):
-                print(f"{json_data['url']} already exists id DB")
+                print(f"{line} already exists id DB")
             else:
                 collection.insert_one(data)
                 print(f"Inserted {data['host']}")
