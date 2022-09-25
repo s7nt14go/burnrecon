@@ -1,11 +1,13 @@
+from typing import Optional
+
 import typer
 from base import (
     getalive,
     list_subdomains,
     list_urls_from_target,
+    naabu_scan,
     subdomain_enum,
     save_subdomains,
-    naabu_scan,
 )
 
 app = typer.Typer()
@@ -15,9 +17,12 @@ app = typer.Typer()
 def enum(
     target: str = typer.Option(..., "--target", "-t", help="Name of target"),
     domain: str = typer.Option(..., "--domain", "-d", help="Domain of target"),
+    bbplatform: Optional[str] = typer.Option(
+        "", "--platform", "-p", help="Name of bug bounty platform"
+    ),
 ):
     """Enumerate subdomains."""
-    subdomain_enum(target, domain)
+    subdomain_enum(target, domain, bbplatform)
 
 
 @app.command()
